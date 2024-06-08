@@ -127,13 +127,19 @@ static ssize_t device_write(struct file *filp, const char __user *buff, size_t l
     int ind = len - 1;
     int bytes_read = 0;
     memset(msg, '\0', BUF_LEN);
+    char tmp[BUF_LEN];
     const char *msg_ptr = msg;
 
     while (len && msg_ptr)
     {
-        msg[bytes_read++] = buff[ind--];
+        tmp[bytes_read++] = buff[ind--];
         len--;
     }
+    
+    // reverse string
+    for (int i = 0; i < bytes_read; i++) 
+        // swapping characters
+        msg[i] = tmp[bytes_read - i - 1];
     
     return bytes_read;
 } 
